@@ -1,5 +1,5 @@
 function getRandomTime() {
-  return Math.floor(Math.random() * 3000) + 1000;
+  return Math.floor(Math.random() * 3000) + 1000; 
 }
 
 function createPromise() {
@@ -15,17 +15,16 @@ const loadingRow = document.createElement('tr');
 const loadingCell = document.createElement('td');
 loadingCell.setAttribute('colspan', '2');
 loadingCell.textContent = 'Loading...';
-loadingRow.appendChild(loadingCell);
 
 const table = document.getElementById('myTable');
+const loading = document.getElementById('loading');
 table.appendChild(loadingRow);
 
 const promises = [createPromise(), createPromise(), createPromise()];
 
 Promise.all(promises)
   .then((results) => {
-    table.removeChild(loadingRow);
-
+    loading.remove();
     results.forEach((time, index) => {
       const row = document.createElement('tr');
 
@@ -34,7 +33,8 @@ Promise.all(promises)
       row.appendChild(promiseCell);
 
       const timeCell = document.createElement('td');
-      timeCell.textContent = (time / 1000).toFixed(3);
+      const seconds = (time / 1000).toFixed(3);
+      timeCell.textContent = seconds;
       row.appendChild(timeCell);
 
       table.appendChild(row);
@@ -48,7 +48,8 @@ Promise.all(promises)
 
     const totalTimeCell = document.createElement('td');
     const totalTime = results.reduce((total, time) => total + time, 0);
-    totalTimeCell.textContent = (totalTime / 1000).toFixed(3);
+    const totalSeconds = (totalTime / 1000).toFixed(3);
+    totalTimeCell.textContent = totalSeconds;
     totalRow.appendChild(totalTimeCell);
 
     table.appendChild(totalRow);
